@@ -85,13 +85,13 @@ public final class TraceEnrichingFilter implements ContainerRequestFilter, Conta
         }
     }
 
-    // Returns true iff the context contains a "1" X-B3-Sampled header, or absent if there is no such header.
+    // Returns true iff the context contains a "1" or "true" X-B3-Sampled header, or absent if there is no such header.
     private static Optional<Boolean> hasSampledHeader(ContainerRequestContext context) {
         String header = context.getHeaderString(TraceHttpHeaders.IS_SAMPLED);
         if (header == null) {
             return Optional.empty();
         } else {
-            return Optional.of(header.equals("1"));
+            return Optional.of(header.equals("1") || header.equals("true"));
         }
     }
 }
